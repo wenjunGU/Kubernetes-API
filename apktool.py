@@ -1,5 +1,8 @@
   #!/usr/bin/env python
 # --*-- coding:utf-8 --*--
+'''
+手游渠道包，自动化批量分包脚本
+'''
 
 import proc
 import subprocess

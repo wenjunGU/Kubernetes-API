@@ -2,9 +2,6 @@
 # -*- coding:utf-8 -*-
 
 '''
-Created on Oct 19, 2014
-@author: freewind
-@description:
 数据库本地慢查日志监控;游戏服务器数据慢查日志监控
 1分钟内慢查日志时间大于等于10s发短信报警通知
 1分钟内慢查日志时间大于等于3s发邮件通知

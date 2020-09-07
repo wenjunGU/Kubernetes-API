@@ -31,8 +31,8 @@ def writeLog(message):
 
 filepath = "/data/wuming/wuming.txt"
 PATH = "/opt/rh/sdk/refresh.py"
-SecretId = "AKIDqyLeRxfrzV7G2esxmH6VLmiEEnsMkDaB"
-SecretKey = "Q1BjxeEaBsVmWtdsl4BREUJkdDBhlBbi"
+SecretId = "xxxx"
+SecretKey = "xxxx"
 
 def els(va):
     s = commands.getoutput("cat %s | awk 'NR==%s'" % (filepath,va))

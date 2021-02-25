@@ -2,8 +2,8 @@
 
 Python client for the [kubernetes](http://kubernetes.io/) API.
 
-##基于Flask写了一个轻量简便的K8S API，使用POST请求该接口使用，方便集成至CI或者CMDB。「写的比较简陋」
-##属于轮子上搭棚子，感谢https://github.com/kubernetes-client/python.git。
+##基于Flask写了一个轻量简便的K8S API，使用POST请求该接口使用，方便集成至CI或者CMDB。
+属于轮子上搭棚子，感谢https://github.com/kubernetes-client/python.git。
 
 ## Installation
 

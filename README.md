@@ -1,2 +1,1 @@
-# itxiaoshou
-zabbix_sender
+##

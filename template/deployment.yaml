@@ -1,0 +1,89 @@
+apiVersion: apps/v1       ##接口统一为v1beta2
+kind: Deployment               ##资源对象为Deployment
+metadata:
+  name: ilxshow-kankeigreen    ##deployment名称，与Pod名称相同，对应ops模块名「需可选」
+  namespace: default           ##命名空间名称，对应ops产品名「需可选」
+spec:
+  replicas: 1                  ##默认起一个pod「需可选」    1
+  selector:
+    matchLabels:
+      app: ilxshow-kankeigreen ##与Deploymen名称相同即可「需可选」
+  strategy:
+    rollingUpdate:             ##默认策略即可
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+         app: ilxshow-kankeigreen    ##与Deploymen名称相同即可「需可选」
+    spec:
+      affinity:                      ##标签选择，「需可选，可添加」       2
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - prod
+      containers:
+      - env:                         ##环境变量，「需可选，可添加」
+        - name: TZ
+          value: Asia/Shanghai
+        - name: PodName              ##默认环境变量「必选」
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        image: harbor.internal.zenmen.com/ilxshow/ilxshow-kankeigreen-prod:ilxshow_kankeigreen_v1.0.19.20200704_R_1   ##镜像地址「需可选」
+        imagePullPolicy: Always
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - touch /tmp/$xxx   ##pod启动后shell操作，需从ops传入变量，「需从该字段开始可选」   3
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - rm -rf /tmp/$xxx                          ##pod退出前shell操作，需从ops传入变量「需从该字段开始可选」
+        name: ilxshow-kankeigreen      ##Pod名称，与Deployment名称相同「需可选」
+        ports:                         ##容器内部监听端口及端口协议，「如无service选项则不需要」
+        -  containerPort: 80
+           protocol: TCP
+        resources:                     ##资源限制，默认6c12g「需可选」
+          limits:
+            cpu: "6"
+            memory: 12Gi
+        securityContext:               ##资源策略，默认即可    4
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:                 ##卷内挂载，「需可选，可添加」    5
+        - mountPath: /etc/localtime
+          name: vol1
+      dnsPolicy: ClusterFirst         ##安全策略，默认即可
+      restartPolicy: Always
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 2
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 2
+      volumes:                      ##卷外挂载，且类型需有hostpath、persistentVolumeClaim、ConfigMap、Secret四种，按如下格式。「需可选，可添加」  5
+      - hostPath:
+          path: /etc/localtime
+        name: vol1

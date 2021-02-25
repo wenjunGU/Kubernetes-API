@@ -1,0 +1,15 @@
+apiVersion: v1                 ##service统一接口
+kind: Service
+metadata:
+  labels:
+    app: ilxshow-kankeigreen   ##deployment名称，与Pod名称相同，对应ops模块名「需可选」
+  name: ilxshow-kankeigreen
+  namespace: default           ##命名空间名称，对应ops产品名「需可选」
+spec:
+  selector:
+    app: ilxshow-kankeigreen   ##标签寻找，与Pod名称相同，对应ops模块名「需可选」
+  type: NodePort               ##端口映射模式，默认即可
+  ports:
+  - port: 5555                 ##Pod的service监听「容器监听端口」
+    targetPort: 5555
+    nodePort: 15555

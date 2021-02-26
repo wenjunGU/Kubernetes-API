@@ -2,8 +2,8 @@
 
 Python client for the [kubernetes](http://kubernetes.io/) API.
 
-##基于Flask写了一个轻量简便的K8S API，使用POST请求该接口使用，方便集成至CI或者CMDB。
-属于轮子上搭棚子，感谢https://github.com/kubernetes-client/python.git。
+##基于Flask写了一个轻量简便的K8S API，使用POST请求该接口使用，方便集成至CI或者CMDB。  
+##属于轮子上搭棚子，感谢https://github.com/kubernetes-client/python.git。  
 
 ## Installation
 
@@ -78,22 +78,22 @@ if __name__ == '__main__':
 ```
 
 //可直接使用python启动，实际应用建议使用guincorn
-//docs下有所有API列表，本文只是列出几个常用的，如有问题欢迎交流
+//docs下有所有API列表，本文只是列出几个常用的，如有问题欢迎交流  
 ```
 ls -al docs
 ```
 
-//接口参数如下「包含所有路由」
-key str
-value str
-node str
-ns str
-name str
-replicas int
-image str
-port int
-nodeport int
-model str
+//接口参数如下「包含所有路由」  
+key str  
+value str  
+node str  
+ns str  
+name str  
+replicas int  
+image str  
+port int  
+nodeport int  
+model str  
 
 
 //使用curl模拟POST测试如下，例如获取Pod信息
